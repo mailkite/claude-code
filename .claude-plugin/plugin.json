@@ -1,0 +1,14 @@
+{
+  "name": "mailkite",
+  "displayName": "MailKite",
+  "version": "0.1.0",
+  "description": "Connect MailKite — inbound email → webhook + a send API — to your coding agent. Bundles the hosted MCP server (send, receive, domains, webhooks, routing) with one-click OAuth, plus task slash commands.",
+  "author": { "name": "MailKite", "url": "https://mailkite.dev" },
+  "homepage": "https://mailkite.dev/docs/ai-agents",
+  "repository": "https://github.com/mailkite/claude-code",
+  "license": "MIT",
+  "keywords": ["email", "mcp", "webhook", "smtp", "inbound", "transactional", "api"],
+  "mcpServers": "./.mcp.json",
+  "commands": ["./commands/"],
+  "skills": "./skills/"
+}
