@@ -63,7 +63,7 @@ Best when you're editing the user's app and want native code. Same shape in
 every language — a low-level `request()` plus one method per endpoint.
 
 ```bash
-npm install mailkite        # pip install mailkite · composer require mailkite/mailkite
+npm install mailkite        # pip install mailkite-dev · composer require mailkite/mailkite
                             # gem install mailkite · go get github.com/mailkite/mailkite-go
 ```
 

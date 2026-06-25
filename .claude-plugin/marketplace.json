@@ -10,7 +10,7 @@
       "name": "mailkite",
       "source": "./",
       "description": "Connect MailKite (inbound email → webhook + send API) to your agent over a hosted MCP server with OAuth. Includes task slash commands + the MailKite skill.",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": { "name": "MailKite", "url": "https://mailkite.dev" },
       "homepage": "https://mailkite.dev/docs/ai-agents",
       "license": "MIT",

@@ -23,6 +23,25 @@ string or array), `subject` (required), `html` and/or `text`, optional `cc`,
 `bcc`, `replyTo`, `inReplyTo`, `attachments[]` (`{ filename, url }` or
 `{ filename, content, contentType }`).
 
+## Agents & routing (bearer)
+
+| Method | Path | Body | Returns |
+| --- | --- | --- | --- |
+| POST | `/v1/agent` | agent message (below) | `200 { ok, text, messageId }` |
+| POST | `/v1/route` | route message (below) | `202 { id, routed, action }` |
+
+`/v1/agent` sends a message straight to one of your inbox agents and returns its
+reply — separate from inbound routing (it never matches/overrides routes). Body:
+`text` (required), optional `subject`, `from`, `html`, `routeId` (target a
+specific agent route), `address` (target the agent whose route matches it), and
+`model` (override the model). With no selector it uses the account's **default
+agent** (its most recently created `action: "agent"` route).
+
+`/v1/route` hands a message to one of your **registered** routes and runs that
+route's action (agent, webhook). Arbitrary destinations are not allowed. Body:
+one of `routeId` or `address` (required), `from` (required), optional `subject`,
+`text`, `html`.
+
 ## Domains (bearer)
 
 | Method | Path | Notes |
@@ -73,9 +92,21 @@ string or array), `subject` (required), `html` and/or `text`, optional `cc`,
 
 ## Attachments
 
-Inbound attachments are served from signed, time-limited URLs returned in the
+**Inbound** attachments are served from signed, time-limited URLs returned in the
 webhook + Messages API: `GET /att/:mid/:idx?exp=…&sig=…` — no credential needed.
 Valid 7 days; expired → `410`, tampered → `403`.
+
+**Outbound** — upload a file once and reference it by secure URL instead of
+base64-inlining it on every send:
+
+| POST | `/v1/attachments` | Store a file → `{ id, url, filename, contentType, size, expiresAt }`. |
+
+The SDKs/CLI/MCP method `uploadAttachment` takes the file four ways — a local
+`path` (read off disk → raw-binary upload, the easy path), raw `bytes`, a remote
+`url` (we fetch & re-host it), or base64 `content`. Over raw HTTP it's an S3-style
+PUT: the bytes are the body, with `Content-Type` + `?filename=&retentionDays=`
+(retentionDays ∈ {7,30,90,365}, default 7). Pass the returned `url` to `send()` as
+`{ filename, url }` or link it inline. `path` is local-only — not on the hosted MCP.
 
 ## Conventions & errors
 
