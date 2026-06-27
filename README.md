@@ -33,6 +33,35 @@ flips to `✓ Connected`. That's it — the tools below are now available to you
   - `/mailkite:debug-webhook [message-id]` — diagnose a failing delivery and propose a fix.
 - **The MailKite skill** — playbook + reference the agent loads on demand.
 
+## Agent skill (standalone)
+
+The MailKite **agent skill** also ships on its own — a `SKILL.md` playbook plus reference files
+that drive the whole email lifecycle (account → domain → DNS → webhook → send → confirm inbound).
+Use it in Claude Code or claude.ai without the plugin.
+
+**Easiest — let your agent install it.** Paste this to Claude:
+
+> Download the MailKite agent skill from
+> `https://github.com/mailkite/claude-code/releases/latest/download/mailkite.zip` and unzip it
+> into `~/.claude/skills/` (user-wide) or `.claude/skills/` (this project), then load it.
+
+**Or grab it yourself.** Direct release download:
+<https://github.com/mailkite/claude-code/releases/latest/download/mailkite.zip>
+
+```sh
+# Claude Code — user-wide
+curl -L https://github.com/mailkite/claude-code/releases/latest/download/mailkite.zip -o mailkite.zip
+unzip mailkite.zip -d ~/.claude/skills/
+
+# …or scope it to one project
+unzip mailkite.zip -d .claude/skills/
+```
+
+For **claude.ai / Claude Desktop**: download the zip above, then **Settings → Capabilities →
+Skills → Upload skill** and drop it in.
+
+Source: [`skills/mailkite`](https://github.com/mailkite/claude-code/tree/main/skills/mailkite).
+
 ## Other ways to connect
 
 This plugin is the easiest path. You can also:
